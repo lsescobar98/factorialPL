@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    // Base de datos lógica: Hechos conocidos (factorial de 0 es 1)
+    static Dictionary<int, long> baseDeHechos = new Dictionary<int, long>
+    {
+        { 0, 1 }  // Caso base
+    };
+
+    // Regla lógica: Factorial(N) = N * Factorial(N-1)
+    static long Factorial(int n)
+    {
+        // Verificar si el hecho ya está almacenado
+        if (baseDeHechos.ContainsKey(n))
+        {
+            return baseDeHechos[n];
+        }
+
+        // Aplicar la regla lógica para calcular el factorial
+        long resultado = n * Factorial(n - 1);
+
+        // Almacenar el nuevo hecho en la base de datos lógica
+        baseDeHechos[n] = resultado;
+
+        return resultado;
+    }
+
+    static void Main()
+    {
+        Console.Write("\n\tIngrese un número para calcular su factorial: ");
+        int numero = int.Parse(Console.ReadLine());
+
+        if (numero < 0)
+        {
+            Console.WriteLine("\n\tEl factorial no está definido para números negativos.");
+        }
+        else
+        {
+            long resultado = Factorial(numero);
+            Console.WriteLine($"\n\tEl factorial de {numero} es: {resultado}");
+            Console.ReadKey(true);
+        }
+    }
+}
